@@ -1,0 +1,44 @@
+
+@import '../../constantes.scss';
+
+.header-areomexico {
+    background-color: $blue-aeromexico;
+    font-family: neue-haas-unica, sans-serif;
+    padding: 0rem 1rem !important;
+    color: #fff;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    left: 0;
+    min-width: 320px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 800;
+}
+.navbar {
+    padding: 0rem 0rem !important;
+    height: 60px;
+}
+
+.logoapp {
+    width: 90%;
+    height: auto;
+}
+.medium-nav {
+    width: 15%;
+    height: auto;
+}
+.font-links-mini {
+    display: block;
+    font-size: 12px;
+    line-height: 60px;
+    padding: 0 2px;
+    text-decoration: none;
+    transition: color .1s cubic-bezier(0,1,.5,1);
+    z-index: 800;
+}
+.active-link{
+    color: $blue-active !important;
+}

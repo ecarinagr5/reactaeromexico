@@ -1,0 +1,143 @@
+@import '../../constantes.scss';
+
+.container-grid {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    padding:4% 5%;
+}
+.grid-header {
+    width:100%;
+    height:auto;
+    overflow:hidden;
+    border-bottom: 1px solid rgba(11,35,67,.25);
+}
+.col-grid {
+    width:14.28%;
+    height:auto;
+    display:block;
+    float:left;
+    overflow:hidden;
+    text-align:center;
+}
+.title-col-grid {
+    font-size: 14px;
+}
+.grid-airports {
+    width:100%;
+    height:auto;
+    overflow:hidden;
+    border-bottom: 1px solid rgba(11,35,67,.25);
+}
+.col-grid-airports {
+    width:14.28%;
+    height:auto;
+    display:block;
+    float:left;
+    overflow:hidden;
+    text-align:center;
+    padding: 6% 0;
+    color:#0b2343;
+    p{
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 0.4;
+    }
+    span {
+        font-size: 12px;
+        line-height: 0.4;
+    }
+}
+
+.status-llego {
+    color:green;
+}
+
+.container-line {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+}
+.line {
+    background-color: #004990;
+    width: 100%;
+    top:0;
+    left: 0;
+    z-index: 3;
+    margin-top: 5%;
+    padding-top: 1.5%;
+}
+.dot {
+    height: 9px;
+    width: 9px;
+    background-color: #004990;
+    border-radius: 50%;
+    display: block;
+    float: left;
+    position: absolute;
+    top:20%;
+    left: 0;
+    z-index: 2;
+}
+.dotb {
+    height: 9px;
+    width: 9px;
+    background-color: #004990;
+    border-radius: 50%;
+    display: block;
+    float: left;
+    position: absolute;
+    top:20%;
+    right: 0;
+    z-index: 2;
+}
+.mobile-grid {
+    display: none;
+}
+
+/*Medida General phone*/
+@media only screen and (max-width: 667px) {
+
+    .grid-header {
+        display: none;
+    }
+    .desktop-grid {
+        display: none;
+    }
+    .mobile-grid {
+        display: block;
+    }
+    .col-grid-airports {
+        width: 33.3333%;
+        text-align: left;
+        padding: 5% 1%;
+    }
+    .line {
+        margin-top: 20%;
+        padding-top: 1.5%;
+    }
+    .col-grid-airports-hour {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        padding-left: 35%;
+    }
+    .mini-text {
+        font-size: 10px !important;
+        line-height: 1 !important;
+    }
+    .col-three {
+        width: 33.3333%;
+        height: auto;
+        overflow: hidden;
+        float: left;
+        text-align: center;
+    }
+    .dot,.dotb { 
+        top:30%;
+    }
+}
+
+
+
