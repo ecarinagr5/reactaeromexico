@@ -1,11 +1,13 @@
 import React, { Component }  from 'react';
-import getFlight from '../services/store'
 import imgswitch from '../../assets/img/transferir.png';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import './style.scss';
+import axios from 'axios';
+
+//Redux
 import { connect } from 'react-redux';
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
+import findResults from '../../redux/actions/findResults';
 
   
 class Search extends Component {
@@ -28,12 +30,9 @@ class Search extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);   
         this.switchOrigen = this.switchOrigen.bind(this);
-        this.getCodes = this.getCodes.bind(this);
     }
 
     componentDidMount() {
-        //Get airports
-        this.getCodes();
          //Fecha
          let newDate = new Date();
          let date = newDate.getDate();
@@ -53,20 +52,8 @@ class Search extends Component {
         });
     }   
     
-    getCodes() {
-        const url_base = 'https://www.aeromexico.com/cms/api/v1/airports?language=es&status=1';
-        let codes= [];
-        fetch(url_base).then( resolve => {
-            return resolve.json();
-        }).then(data => {;
-            this.airports = data.airports;
-            this.codes = this.airports.map((location) => location.airport );
-            this.setState ({airports: this.codes});
-        });
-    }
 
     handleChange(event) {
-        console.log("e", event.target)
         //Autocomplete
         if( event.target.id === 'origen-option-2' ) {
             this.setState({origen: event.target.value})
@@ -87,8 +74,6 @@ class Search extends Component {
     switchOrigen() {
         let origenMain = document.getElementById('origen').value;
         let vueloMain = document.getElementById('vuelo').value;
-
-
         //switch
         document.getElementById('vuelo').value = origenMain;
         document.getElementById('origen').value = vueloMain;
@@ -102,22 +87,23 @@ class Search extends Component {
     }
 
     handleSubmit(event) {
-        const { origen, vuelo, fechasend } = this.state;
-        const dataSend = {
+        const { fechasend } = this.state;
+        const data = {
             store: 'mx',
             post: 'WEB',
             flight: '',
             date:fechasend,
             origin:'MEX',
-            destination:'ACA'
+            destination:'MTY'
         }
-        getFlight(dataSend);
+       this.props.findResults(data);
         event.preventDefault();
     }
     
  
     render() {
         const { origen,vuelo,fecha, ayer, manana, fechavalue, ayervalue,mananavalue,airports } = this.state;
+        const { cities } = this.props;
       return (
              <form onSubmit={ this.handleSubmit }>
                 <div className="row search-destino">
@@ -125,8 +111,8 @@ class Search extends Component {
                                 <label >Origen | Ver todos</label>
                                 <Autocomplete
                                     id="origen"
-                                    options={airports}
-                                    getOptionLabel={option => option.alias}
+                                    options={cities}
+                                    getOptionLabel={option => option.city}
                                     onChange={this.handleChange} 
                                     renderInput={params => (
                                      <TextField {...params}  placeholder="Origen" name="origen" variant="outlined" className="input-areo" fullWidth />
@@ -141,8 +127,8 @@ class Search extends Component {
                                 <label>Destino | Ver todos </label>
                                 <Autocomplete
                                     id="vuelo"
-                                    options={airports}
-                                    getOptionLabel={option => option.alias}
+                                    options={cities}
+                                    getOptionLabel={option => option.city}
                                     onChange={this.handleChange} 
                                     renderInput={params => (
                                      <TextField {...params}  placeholder="Destino" name="destino" variant="outlined" className="input-areo"  fullWidth />
@@ -163,12 +149,23 @@ class Search extends Component {
                                 <input type="submit" value="BUSCAR" className="Btn btn-enable" />
                             </div>
 
-                   
                         </div>
                     </form>
       );
     }
   
   }
-  
-  export default Search;
+
+
+const mapStateToProps = (state) => {
+    return {
+        cities: state.allairports,
+    };
+  }
+
+  const mapDispatchToProps = (dispatch) => {
+        return {
+            findResults: text => dispatch(findResults(text)),
+        };
+  };
+  export default connect(mapStateToProps, mapDispatchToProps)(Search);

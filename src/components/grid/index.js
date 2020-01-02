@@ -5,11 +5,12 @@ class Grid extends Component {
     constructor() {
         super();
     }
-
-    componentDidMount() {
-    }
-  
     render() {
+      const { 
+          marketingCarrier,status, departureAirport, departureDateTime,
+          arrivalDateTime,arrivalAirport, arrivalTerminal,operatingFlightCode } = this.props.resultsairports;
+      const hora  = departureDateTime.split('T');
+      const llegada = arrivalDateTime.split('T');
       return (
         <div className="container-grid">
           <div className="grid-header">
@@ -38,18 +39,18 @@ class Grid extends Component {
 
             <div className="grid-airports desktop-grid">
               <div className="col-grid-airports">
-                <p>AM 315</p>
+                <p>{marketingCarrier} {operatingFlightCode }</p>
                 <span>Operado por Aerolitoral</span>
               </div>
               <div className="col-grid-airports">
-                <p className="status-llego">Llegó</p>
+              <p className={status === "ARRIVED"?'green':'red'}>{ status === "ARRIVED" ? 'Llegó':'Salio' }</p>
               </div>
               <div className="col-grid-airports">
-                <p>MEX</p>
-                <span>Terminal T2</span>
+                <p>{ departureAirport }</p>
+                 <span>Terminal T{arrivalTerminal}</span>
               </div>
               <div className="col-grid-airports">
-                <p>11:59</p>
+                <p>{ hora[1] }</p>
               </div>
               <div className="col-grid-airports">
                 <div className="container-line">
@@ -59,31 +60,30 @@ class Grid extends Component {
                 </div>
               </div>
               <div className="col-grid-airports"> 
-                <p>12:50</p>
+                <p> { llegada[1] }</p>
               </div>
               <div className="col-grid-airports">
-                <p>ACA</p>
+                  <p> { arrivalAirport }</p>
                 <span>Terminal N/A</span>
-                <span>Sala N/A</span>
               </div>
             </div>
 
             <div className="grid-airports mobile-grid">
               <div className="col-grid-airports">
-                <p>AM 315</p>
+                <p>{marketingCarrier} {operatingFlightCode }</p>
                 <p className="mini-text">Operado por Aerolitoral</p>
-                <p className="status-llego">Llegó</p>
+                <p className={status === "ARRIVED"?'green':'red'}>{ status === "ARRIVED" ? 'Llegó':'Salio' }</p>
               </div>
               <div className="col-grid-airports">
-                <p>MEX</p>
-                <p className="mini-text">Terminal T2</p>
+                <p>{ departureAirport }</p>
+                <p className="mini-text">Terminal T{arrivalTerminal}</p>
               </div>
               <div className="col-grid-airports">
-                <p>ACA</p>
+                <p>{ arrivalAirport }</p>
                 <p className="mini-text">Terminal N/A</p>
               </div>
               <div className="col-grid-airports-hour">
-                <p className="col-three">11:59</p>
+                <p className="col-three">{ hora[1] }</p>
               <div className="col-three">
                 <div className="container-line">
                   <p className="dot"></p>
@@ -91,7 +91,7 @@ class Grid extends Component {
                   <p className="dotb"></p>
                 </div>
               </div>
-                <p className="col-three">12:50</p>
+                <p className="col-three">{ llegada[1] }</p>
               </div>
         
             </div>

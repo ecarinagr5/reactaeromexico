@@ -5,34 +5,34 @@ import Header from './components/header';
 import Search from './components/search';
 import Grid from './components/grid';
 
-//REDUX
-import { setCity } from './actions';
+
+//Redux
 import { connect } from 'react-redux';
 
 
-class App extends Component {
-
+class App extends React.Component  {
   constructor(props) {
-    super(props);
-    this.state = { destino:null };
+      super(props);
   }
 
-  render() {
-    return(
-      <div>
-        <Header></Header>
-        <Search></Search>
-        <Grid></Grid>
-      </div>
-    );
-  }
+    render(){
+      console.log("porps",this.props)
+     const { resultsairports } = this.props;
+     const length = resultsairports.length;
+      return (
+          <div>
+            <Header></Header>
+            <Search></Search>
+            { length === 0 ?'': <Grid {...this.props}></Grid> }
+          </div>
+      );
+    }
 }
 
+const mapStateToProps = (state) => {
+  return {
+      resultsairports: state.results,
+  };
+}
 
-
-const mapDispatchToPropsActions = dispatch => ({
-    setCity: value => dispatch(setCity(value))
-});
-const AppConnected = connect(null, mapDispatchToPropsActions)(App);
-
-export default AppConnected;
+export default connect(mapStateToProps)(App);
